@@ -1,6 +1,5 @@
-import { decodeJWT } from '@/utils';
-import axios, { AxiosResponse } from 'axios';
-import cookies from 'cookies'
+import { decodeJWT } from "@/utils";
+import axios, { AxiosResponse } from "axios";
 
 interface User {
   id: string;
@@ -13,21 +12,21 @@ interface AuthResponse {
 }
 
 interface LoginResponse {
-    jwt:string;
+  jwt: string;
 }
 
 interface RegisterRequestData {
-    username: string,
-    password: string,
-      repeatPassword: string, 
-      subscribeToNewsLetter: boolean, 
-      gender: string, 
-      status: string,
-       yearOfBirth: number,
+  username: string;
+  password: string;
+  repeatPassword: string;
+  subscribeToNewsLetter: boolean;
+  gender: string;
+  status: string;
+  yearOfBirth: number;
 }
 
 interface RegisterResponse {
-    message: string,
+  message: string;
 }
 
 class Auth {
@@ -37,41 +36,41 @@ class Auth {
     this.baseUrl = process.env.API_URL!;
   }
 
-  async login(username: string, password: string): Promise<LoginResponse | any> {
+  async login(
+    username: string,
+    password: string
+  ): Promise<LoginResponse | any> {
     try {
-      const response: AxiosResponse<LoginResponse> = await axios.post(`https://junior-test.mntzdevs.com/api/login/`, {
-        username,
-        password,
-      });
-  
-      const { jwt } = response.data;
-  
-      localStorage.setItem('token', jwt);
-      const decodedJWT = decodeJWT(jwt)
-     
-      localStorage.setItem('user',JSON.stringify(decodedJWT))
-  
-      return response.data;
-    }catch (error:any) {
-        throw error.response.data.message
+      const { data }: AxiosResponse<LoginResponse> = await axios.post(
+        `https://junior-test.mntzdevs.com/api/login/`,
+        {
+          username,
+          password,
+        }
+      );
+      return data.jwt;
+    } catch (error: any) {
+      throw error.response.data.message ?? "Something went wrong.";
     }
   }
 
-  async register(data:RegisterRequestData): Promise<RegisterResponse | null> {
+  async register(data: RegisterRequestData): Promise<RegisterResponse | null> {
     try {
-      const response: AxiosResponse<RegisterResponse> = await axios.post(`https://junior-test.mntzdevs.com/api/register/`, data);
+      const response: AxiosResponse<RegisterResponse> = await axios.post(
+        `https://junior-test.mntzdevs.com/api/register/`,
+        data
+      );
 
       return response.data;
-    } catch (error:any) {
-     throw error.response.data.message
+    } catch (error: any) {
+      throw error.response.data.message ?? "Something went wrong.";
     }
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
   }
-
 }
 
 const auth = new Auth();
