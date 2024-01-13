@@ -9,9 +9,6 @@ export async function POST(req: Request, res: Response) {
 
     return Response.json({ success: true, jwt }, { status: 200 });
   } catch (error: any) {
-    return Response.json(
-      { success: false, message: error.message },
-      { status: 500 }
-    );
+    return Response.json({ success: false, message: error }, { status: 500 });
   }
 }

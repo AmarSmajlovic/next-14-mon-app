@@ -1,6 +1,5 @@
 "use client";
 import { useAuth } from "@/hooks/auth";
-import auth from "@/services/auth";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, use, useState } from "react";
 
@@ -18,8 +17,8 @@ const Login = () => {
     try {
       await handleLogin(username, password);
       router.push("/");
-    } catch (error) {
-      setError(error);
+    } catch (error: any) {
+      setError(error.response.data.message);
     }
   };
 
