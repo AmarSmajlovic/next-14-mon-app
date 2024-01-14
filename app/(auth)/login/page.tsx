@@ -1,4 +1,5 @@
 "use client";
+import SubmitButton from "@/components/SubmitButton";
 import { useLogin } from "@/hooks/auth";
 import React from "react";
 
@@ -11,7 +12,7 @@ const Login = () => {
       <form action={handleLogin}>
         <input type="text" name="username" placeholder="username" />
         <input type="text" name="password" placeholder="password" />
-        <button type="submit">Login</button>
+        <SubmitButton />
         {error && error}
       </form>
     </div>
