@@ -1,31 +1,14 @@
 "use client";
-import { useAuth } from "@/hooks/auth";
-import { useRouter } from "next/navigation";
-import React, { FormEvent, use, useState } from "react";
+import { useLogin } from "@/hooks/auth";
+import React from "react";
 
 const Login = () => {
-  const router = useRouter();
-  const [error, setError] = useState<any>(null);
-  const { handleLogin } = useAuth();
-
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const username = formData.get("username") as string;
-    const password = formData.get("password") as string;
-
-    try {
-      await handleLogin(username, password);
-      router.push("/");
-    } catch (error: any) {
-      setError(error.response.data.message);
-    }
-  };
+  const { handleLogin, error } = useLogin();
 
   return (
     <div>
       Login Page
-      <form onSubmit={onSubmit}>
+      <form action={handleLogin}>
         <input type="text" name="username" placeholder="username" />
         <input type="text" name="password" placeholder="password" />
         <button type="submit">Login</button>
