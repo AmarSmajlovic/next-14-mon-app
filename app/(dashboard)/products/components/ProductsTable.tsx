@@ -4,7 +4,7 @@ import Table from "@/components/Table";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
-type Product = {
+export type Product = {
   name: string;
   price: number;
 };
@@ -18,9 +18,19 @@ const ProductsTable = ({ data }: Props) => {
 
   const columns: ColumnDef<Product, any>[] = [
     columnHelper.accessor("name", {
+      header: (props) => {
+        return (
+          <div className="text-start">{props.column.id.toUpperCase()}</div>
+        );
+      },
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor("price", {
+      header: (props) => {
+        return (
+          <div className="text-start">{props.column.id.toUpperCase()}</div>
+        );
+      },
       cell: (info) => info.getValue(),
     }),
   ];
