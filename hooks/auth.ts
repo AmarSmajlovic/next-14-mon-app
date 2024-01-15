@@ -57,3 +57,17 @@ export const useRegister = () => {
 
   return { handleRegister, error };
 };
+
+export const useLogout = () => {
+  const router = useRouter();
+  const handleLogout = async () => {
+    try {
+      await auth.logout();
+      return router.push("/login");
+    } catch (error) {
+      //do nothing
+    }
+  };
+
+  return { handleLogout };
+};

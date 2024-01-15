@@ -1,5 +1,6 @@
 import { decodeJWT } from "@/utils";
 import axios, { AxiosResponse } from "axios";
+import { cookies } from "next/headers";
 
 interface User {
   id: string;
@@ -67,9 +68,8 @@ class Auth {
     }
   }
 
-  logout(): void {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+  async logout(): Promise<void> {
+    await axios.post("/api/logout");
   }
 }
 

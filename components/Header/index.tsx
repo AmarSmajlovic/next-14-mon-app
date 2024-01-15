@@ -1,16 +1,10 @@
 "use client";
 
-import auth from "@/services/auth";
+import { useLogout } from "@/hooks/auth";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 const Header = () => {
-  const router = useRouter();
-
-  const handleLogout = () => {
-    auth.logout();
-    return router.push("/login");
-  };
+  const { handleLogout } = useLogout();
   return (
     <div className="flex justify-between">
       <div className="flex gap-4">
